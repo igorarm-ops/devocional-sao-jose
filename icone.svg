@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Lírio de São José sobre o esquadro do carpinteiro">
+  <defs>
+    <radialGradient id="verde" cx="50%" cy="32%" r="82%">
+      <stop offset="0%" stop-color="#2f4a37"/>
+      <stop offset="58%" stop-color="#1f3225"/>
+      <stop offset="100%" stop-color="#11201a"/>
+    </radialGradient>
+    <linearGradient id="ouro" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ecd595"/>
+      <stop offset="100%" stop-color="#c8a45c"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="512" height="512" fill="url(#verde)"/>
+
+  <!-- estrelas tênues -->
+  <g fill="#e6cd8a" opacity="0.85">
+    <circle cx="116" cy="104" r="2.4"/>
+    <circle cx="404" cy="92" r="2"/>
+    <circle cx="436" cy="196" r="2.2"/>
+    <circle cx="84" cy="210" r="1.8"/>
+    <circle cx="404" cy="318" r="1.8"/>
+  </g>
+
+  <!-- halo de santidade -->
+  <circle cx="256" cy="226" r="160" fill="none" stroke="#e6cd8a" stroke-width="4" opacity="0.22"/>
+
+  <!-- esquadro do carpinteiro (base) -->
+  <path d="M196 398 H320 M196 398 V356" fill="none" stroke="url(#ouro)" stroke-width="12"
+        stroke-linecap="round" stroke-linejoin="round" opacity="0.95"/>
+
+  <!-- caule -->
+  <path d="M256 262 L256 398" fill="none" stroke="url(#ouro)" stroke-width="9" stroke-linecap="round"/>
+  <!-- laço/faixa do caule -->
+  <rect x="231" y="300" width="50" height="13" rx="6" fill="url(#ouro)"/>
+
+  <!-- lírio: três pétalas -->
+  <g fill="#f7f2e6" stroke="url(#ouro)" stroke-width="3" stroke-linejoin="round">
+    <path d="M256 262 Q214 188 256 116 Q298 188 256 262 Z"/>
+    <path d="M256 262 Q176 250 138 312 Q212 322 256 262 Z"/>
+    <path d="M256 262 Q336 250 374 312 Q300 322 256 262 Z"/>
+  </g>
+
+  <!-- estames -->
+  <g stroke="url(#ouro)" stroke-width="5" stroke-linecap="round">
+    <path d="M256 250 L244 198"/>
+    <path d="M256 250 L256 190"/>
+    <path d="M256 250 L268 198"/>
+  </g>
+  <g fill="url(#ouro)">
+    <circle cx="244" cy="196" r="6"/>
+    <circle cx="256" cy="188" r="6"/>
+    <circle cx="268" cy="196" r="6"/>
+  </g>
+  <circle cx="256" cy="252" r="11" fill="url(#ouro)"/>
+</svg>

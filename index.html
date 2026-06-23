@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>À Sombra de São José · Devocional do Esposo</title>
+  <meta name="description" content="Devocional do esposo: uma reflexão por dia, dos santos e das cartas dos papas, à escola de São José, o varão justo, para amar a esposa como Cristo ama a Igreja." />
+  <meta name="theme-color" content="#14231a" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="São José" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" href="icone.svg" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+</head>
+<body>
+
+  <header class="topo">
+    <div class="cruz" aria-hidden="true">⚜</div>
+    <div class="data" id="data"></div>
+    <h1>À Sombra de São José</h1>
+    <p class="subtitulo">Devocional do esposo — aprender a amar à escola de São José, o varão justo, esposo de Maria e guardião do Redentor.</p>
+    <button class="para-quem" id="paraQuem">✎ Para quem você ama?</button>
+  </header>
+
+  <main class="pagina" id="pagina">
+    <div class="topo-pagina">
+      <span class="selo" id="selo">Ensinamento</span>
+      <span class="contador-dia" id="contadorDia"></span>
+    </div>
+
+    <h2 class="fonte-nome" id="fonteNome"></h2>
+    <div class="fonte-periodo" id="fontePeriodo"></div>
+    <div class="tema" id="tema"></div>
+
+    <div class="divisor" aria-hidden="true">❧ ⚜ ❧</div>
+
+    <blockquote class="ensinamento" id="ensinamento"></blockquote>
+    <div class="referencia" id="referencia"></div>
+
+    <p class="reflexao" id="reflexao"></p>
+
+    <button class="btn-aprofundar" id="btnAprofundar" aria-expanded="false" aria-controls="blocoLonga">▾ Aprofundar a reflexão</button>
+    <div class="bloco-longa" id="blocoLonga" hidden>
+      <div class="rotulo-longa">Reflexão profunda</div>
+      <div id="reflexaoLonga"></div>
+    </div>
+
+    <div class="caixa caixa-gesto">
+      <div class="rotulo">
+        <span class="lado">♥ Gesto de amor de hoje</span>
+        <button class="btn-mini-acao" id="btnCompartilharGesto" title="Compartilhar o gesto">⇪ Enviar</button>
+      </div>
+      <p id="gesto"></p>
+    </div>
+
+    <div class="caixa caixa-oracao">
+      <div class="rotulo"><span class="lado">✠ Oração</span></div>
+      <p id="oracao"></p>
+    </div>
+
+    <p class="versiculo" id="versiculo"></p>
+  </main>
+
+  <!-- Barra de leitura -->
+  <div class="ferramentas">
+    <button class="btn-tool" id="prefLonga" aria-pressed="false">📖 Reflexão profunda: ao tocar</button>
+    <span class="grupo-fonte">
+      <button class="btn-tool" id="btnFonteMenos" aria-label="Diminuir a fonte">A−</button>
+      <button class="btn-tool" id="btnFonteMais" aria-label="Aumentar a fonte">A+</button>
+    </span>
+  </div>
+
+  <!-- Controles -->
+  <div class="controles">
+    <button class="btn-ouro" id="btnVivido">♥ Marcar como vivido hoje</button>
+    <button class="btn-linha" id="btnBilhete">✉ Bilhete de amor</button>
+    <button class="btn-linha" id="btnAnterior" aria-label="Dia anterior">‹ Anterior</button>
+    <button class="btn-linha" id="btnHoje">Hoje</button>
+    <button class="btn-linha" id="btnProximo" aria-label="Próximo dia">Próximo ›</button>
+    <button class="btn-linha" id="btnTodos">☰ Ver todos</button>
+  </div>
+
+  <footer class="rodape">
+    <div id="rodapeSeq"></div>
+    <div class="assinatura">São José, esposo de Maria e modelo dos esposos, rogai por nós.</div>
+  </footer>
+
+  <!-- Painel: dias + acervo -->
+  <div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-label="Todos os ensinamentos">
+    <div class="painel">
+      <h2>O ano inteiro</h2>
+      <div class="tabs">
+        <button class="tab ativo" id="tabDias">366 dias</button>
+        <button class="tab" id="tabAcervo">Acervo de fontes</button>
+      </div>
+      <div class="lista-rolagem">
+        <div id="abaDias"></div>
+        <div id="abaAcervo" hidden></div>
+      </div>
+      <button class="btn-ouro fechar-painel" id="fecharTodos">Fechar</button>
+    </div>
+  </div>
+
+  <!-- Bilhete de amor -->
+  <div class="bilhete" id="bilhete" data-texto="">
+    <div class="rot"><span>✉ Bilhete para enviar a ela</span><button class="x" id="btnFecharBilhete" aria-label="Fechar bilhete">✕</button></div>
+    <div class="txt" id="bilheteTxt"></div>
+    <div class="acoes">
+      <button class="btn-rosa" id="btnEnviarBilhete">Enviar</button>
+      <button class="btn-mini" id="btnCopiar">Copiar</button>
+      <button class="btn-mini" id="btnOutroBilhete">Outro bilhete</button>
+    </div>
+  </div>
+
+  <script src="ensinamentos.js"></script>
+  <script src="reflexoes-ano.js"></script>
+  <script src="bilhetes.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
