@@ -1,5 +1,5 @@
 /* Service worker — cache do app shell para uso offline */
-const CACHE = "sao-jose-v3";
+const CACHE = "sao-jose-v4";
 const ARQUIVOS = [
   "./",
   "index.html",
@@ -11,6 +11,7 @@ const ARQUIVOS = [
   "icone.svg",
   "icone-192.png",
   "icone-512.png",
+  "icone-1024.png",
   "apple-touch-icon.png",
   "manifest.webmanifest"
 ];
