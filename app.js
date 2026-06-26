@@ -299,6 +299,77 @@
   }
   function enviarBilhete() { compartilhar(el("bilhete").dataset.texto || ""); }
 
+  /* ---------- lembrete diário (notificação push) ---------- */
+  var VAPID_PUBLIC = "BLED5GBXuJRjGk8h8vbWlTBSVC2nv0lfMK7EwgBukD96lAaaoa7k3vkA6hl1wP_ZNxyDl_tXx8_w9KRyLBz_46A";
+
+  function pushSuportado() {
+    return "serviceWorker" in navigator && "PushManager" in window && "Notification" in window;
+  }
+  function ehInstalado() {
+    return window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone === true;
+  }
+  function b64ToUint8(base64) {
+    var pad = "=".repeat((4 - base64.length % 4) % 4);
+    var b = (base64 + pad).replace(/-/g, "+").replace(/_/g, "/");
+    var raw = atob(b), arr = new Uint8Array(raw.length);
+    for (var i = 0; i < raw.length; i++) arr[i] = raw.charCodeAt(i);
+    return arr;
+  }
+  function msgLembrete(texto, sub) {
+    el("lembreteMsg").textContent = texto;
+    var ta = el("lembreteSub");
+    if (sub) { ta.value = sub; ta.hidden = false; el("btnCopiarSub").hidden = false; }
+    else { ta.value = ""; ta.hidden = true; el("btnCopiarSub").hidden = true; }
+    el("lembreteBox").hidden = false;
+    el("lembreteBox").scrollIntoView({ behavior: "smooth", block: "center" });
+  }
+  function setBotaoLembrete(ativo) {
+    var b = el("btnLembrete");
+    if (!b) return;
+    b.textContent = ativo ? "🔔 Lembrete ativo" : "🔔 Lembrete diário";
+    b.classList.toggle("vivido", !!ativo);
+  }
+  function initLembrete() {
+    if (!pushSuportado()) { setBotaoLembrete(false); return; }
+    navigator.serviceWorker.ready
+      .then(function (reg) { return reg.pushManager.getSubscription(); })
+      .then(function (sub) { setBotaoLembrete(!!sub); })
+      .catch(function () {});
+  }
+  function ativarLembrete() {
+    if (!pushSuportado()) {
+      msgLembrete("Para receber o lembrete no iPhone, abra este app pela Tela de Início (instalado), e não pelo Safari. Toque em Compartilhar (↑) › Adicionar à Tela de Início, e abra por aquele ícone.");
+      return;
+    }
+    if (!ehInstalado()) {
+      msgLembrete("Quase lá! No iPhone, o lembrete só funciona com o app instalado. Toque em Compartilhar (↑) › Adicionar à Tela de Início, abra o app por esse ícone e toque de novo em “Lembrete diário”.");
+      return;
+    }
+    Notification.requestPermission().then(function (perm) {
+      if (perm !== "granted") {
+        msgLembrete("As notificações estão bloqueadas. Você pode liberar em Ajustes › Notificações › São José, e tentar de novo.");
+        return;
+      }
+      navigator.serviceWorker.ready.then(function (reg) {
+        return reg.pushManager.getSubscription().then(function (sub) {
+          return sub || reg.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: b64ToUint8(VAPID_PUBLIC) });
+        });
+      }).then(function (sub) {
+        setBotaoLembrete(true);
+        msgLembrete("Quase pronto! Copie o código abaixo e cole na conversa com o Claude — é ele que finaliza o envio diário das 10h.", JSON.stringify(sub));
+      }).catch(function (e) {
+        msgLembrete("Não consegui ativar agora (" + (e && e.message ? e.message : "erro") + "). Tente novamente daqui a pouco.");
+      });
+    });
+  }
+  function copiarSub() {
+    var ta = el("lembreteSub"), btn = el("btnCopiarSub");
+    function ok() { btn.textContent = "Copiado! ✓"; setTimeout(function () { btn.textContent = "Copiar código"; }, 1600); }
+    function fb() { ta.hidden = false; ta.select(); try { document.execCommand("copy"); ok(); } catch (e) {} }
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(ta.value).then(ok, fb);
+    else fb();
+  }
+
   /* ---------- inicialização ---------- */
   function init() {
     if (!ANO.length || !window.ENSINAMENTOS) {
@@ -341,6 +412,11 @@
     el("btnEnviarBilhete").addEventListener("click", enviarBilhete);
     el("btnFecharBilhete").addEventListener("click", fecharBilhete);
     el("btnOutroBilhete").addEventListener("click", mostrarBilhete);
+
+    el("btnLembrete").addEventListener("click", ativarLembrete);
+    el("btnCopiarSub").addEventListener("click", copiarSub);
+    el("btnFecharLembrete").addEventListener("click", function () { el("lembreteBox").hidden = true; });
+    initLembrete();
 
     document.addEventListener("keydown", function (e) {
       if (e.key === "Escape") { fecharPainel(); fecharBilhete(); }

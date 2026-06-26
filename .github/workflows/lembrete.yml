@@ -1,0 +1,26 @@
+name: Lembrete diário — São José
+
+on:
+  schedule:
+    - cron: "0 13 * * *"   # 13:00 UTC = 10:00 (horário de Brasília)
+  workflow_dispatch: {}     # permite disparo manual (teste)
+
+jobs:
+  enviar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Instalar dependências
+        working-directory: push
+        run: npm install
+      - name: Enviar push do dia
+        working-directory: push
+        env:
+          VAPID_PUBLIC: ${{ secrets.VAPID_PUBLIC }}
+          VAPID_PRIVATE: ${{ secrets.VAPID_PRIVATE }}
+          VAPID_SUBJECT: ${{ secrets.VAPID_SUBJECT }}
+          PUSH_SUBSCRIPTION: ${{ secrets.PUSH_SUBSCRIPTION }}
+        run: node enviar.js

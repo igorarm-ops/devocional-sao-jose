@@ -83,6 +83,16 @@
     <button class="btn-linha" id="btnHoje">Hoje</button>
     <button class="btn-linha" id="btnProximo" aria-label="Próximo dia">Próximo ›</button>
     <button class="btn-linha" id="btnTodos">☰ Ver todos</button>
+    <button class="btn-linha" id="btnLembrete">🔔 Lembrete diário</button>
+  </div>
+
+  <div class="lembrete-box" id="lembreteBox" hidden>
+    <p id="lembreteMsg"></p>
+    <textarea id="lembreteSub" readonly hidden></textarea>
+    <div class="lembrete-acoes">
+      <button class="btn-ouro" id="btnCopiarSub" hidden>Copiar código</button>
+      <button class="btn-linha" id="btnFecharLembrete">Fechar</button>
+    </div>
   </div>
 
   <footer class="rodape">

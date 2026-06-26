@@ -206,6 +206,23 @@ button:active { transform: translateY(1px); }
 .btn-rosa:hover { filter: brightness(1.08); }
 .btn-mini { background: transparent; border: 1px solid rgba(168,102,59,.4); color: var(--madeira); }
 
+/* ---------- Caixa de lembrete (push) ---------- */
+.lembrete-box {
+  position: relative; z-index: 1; width: 100%; max-width: 720px; margin-top: 14px;
+  background: linear-gradient(180deg, var(--pergaminho), var(--pergaminho-sombra));
+  border-radius: 10px; padding: 18px 20px;
+  box-shadow: 0 16px 40px -18px var(--sombra), 0 0 0 1px rgba(153,119,51,.3);
+  animation: surge .4s ease both;
+}
+.lembrete-box p { color: var(--tinta); font-size: 16px; line-height: 1.5; }
+.lembrete-box textarea {
+  width: 100%; margin-top: 10px; min-height: 70px; font-family: ui-monospace, Menlo, Consolas, monospace;
+  font-size: 11px; line-height: 1.35; border: 1px solid rgba(153,119,51,.4); border-radius: 8px;
+  padding: 8px; resize: vertical; background: #fff; color: var(--tinta); word-break: break-all;
+}
+.lembrete-acoes { margin-top: 12px; display: flex; gap: 10px; flex-wrap: wrap; }
+.lembrete-acoes button { font-size: 14px; padding: 9px 18px; }
+
 @keyframes surge { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes fade { from { opacity: 0; } to { opacity: 1; } }
 .troca { animation: surge .5s ease both; }

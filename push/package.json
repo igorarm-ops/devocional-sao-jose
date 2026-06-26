@@ -1,0 +1,9 @@
+{
+  "name": "lembrete-sao-jose",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Envio diário da notificação push do devocional À Sombra de São José",
+  "dependencies": {
+    "web-push": "^3.6.7"
+  }
+}

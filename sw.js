@@ -1,5 +1,5 @@
 /* Service worker — cache do app shell para uso offline */
-const CACHE = "sao-jose-v4";
+const CACHE = "sao-jose-v5";
 const ARQUIVOS = [
   "./",
   "index.html",
@@ -38,5 +38,33 @@ self.addEventListener("fetch", (e) => {
       }
       return resp;
     }).catch(() => hit))
+  );
+});
+
+/* ---------- Notificação diária (push) ---------- */
+self.addEventListener("push", (e) => {
+  let d = {};
+  try { d = e.data ? e.data.json() : {}; } catch (_) { d = { body: e.data ? e.data.text() : "" }; }
+  const title = d.title || "À Sombra de São José";
+  const options = {
+    body: d.body || "Sua reflexão de hoje está pronta.",
+    icon: "icone-192.png",
+    badge: "icone-192.png",
+    lang: "pt-BR",
+    tag: "lembrete-diario",
+    renotify: true,
+    data: { url: d.url || "./" }
+  };
+  e.waitUntil(self.registration.showNotification(title, options));
+});
+
+self.addEventListener("notificationclick", (e) => {
+  e.notification.close();
+  const url = (e.notification.data && e.notification.data.url) || "./";
+  e.waitUntil(
+    self.clients.matchAll({ type: "window", includeUncontrolled: true }).then((list) => {
+      for (const c of list) { if ("focus" in c) return c.focus(); }
+      if (self.clients.openWindow) return self.clients.openWindow(url);
+    })
   );
 });
