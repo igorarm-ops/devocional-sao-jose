@@ -1,5 +1,5 @@
 /* Service worker — cache do app shell para uso offline */
-const CACHE = "sao-jose-v7";
+const CACHE = "sao-jose-v8";
 const ARQUIVOS = [
   "./",
   "index.html",
@@ -9,11 +9,10 @@ const ARQUIVOS = [
   "reflexoes-ano.js",
   "bilhetes.js",
   "icone.svg",
-  "icone-192-v2.png",
-  "icone-512-v2.png",
-  "icone-1024-v2.png",
-  "apple-touch-icon-v2.png",
-  "manifest-v2.webmanifest"
+  "icone-192-v3.png",
+  "icone-512-v3.png",
+  "apple-touch-icon-v3.png",
+  "manifest-v3.webmanifest"
 ];
 
 self.addEventListener("install", (e) => {
